@@ -31,3 +31,10 @@
 /home/sena/workspace/desafio-net-react/webApi/obj/Debug/net6.0/webApi.csproj.CopyComplete
 /home/sena/workspace/desafio-net-react/webApi/bin/Debug/net6.0/CsvHelper.dll
 /home/sena/workspace/desafio-net-react/webApi/bin/Debug/net6.0/SeedData/data.csv
+/home/sena/workspace/desafio-net-react/webApi/bin/Debug/net6.0/webApi.xml
+/home/sena/workspace/desafio-net-react/webApi/bin/Debug/net6.0/Microsoft.OpenApi.dll
+/home/sena/workspace/desafio-net-react/webApi/bin/Debug/net6.0/Swashbuckle.AspNetCore.Swagger.dll
+/home/sena/workspace/desafio-net-react/webApi/bin/Debug/net6.0/Swashbuckle.AspNetCore.SwaggerGen.dll
+/home/sena/workspace/desafio-net-react/webApi/bin/Debug/net6.0/Swashbuckle.AspNetCore.SwaggerUI.dll
+/home/sena/workspace/desafio-net-react/webApi/obj/Debug/net6.0/webApi.MvcApplicationPartsAssemblyInfo.cs
+/home/sena/workspace/desafio-net-react/webApi/obj/Debug/net6.0/webApi.xml
