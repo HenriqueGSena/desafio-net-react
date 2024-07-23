@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using webApi.Data;
@@ -11,6 +12,7 @@ namespace webApi.Controller {
         /// </summary>
         /// <returns>Lista Estudantes</returns>
         /// <response code="200">Sucess</response>
+        [Authorize]
         [HttpGet]
         [Route("/api/students")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -31,6 +33,7 @@ namespace webApi.Controller {
         /// <param name="id">Identificador do evento</param>
         /// <response code="200">Sucess</response>
         /// <response code="204">Not Content</response>
+        [Authorize]
         [HttpGet]
         [Route("/api/students/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -53,6 +56,7 @@ namespace webApi.Controller {
         /// <param name="devEvent">Dados do estudante</param>
         /// <returns>Estudante recem criado</returns>
         /// <response code="201">Sucess</response>
+        [Authorize]
         [HttpPost]
         [Route("/api/students")]
         [ProducesResponseType(StatusCodes.Status201Created)]
@@ -94,6 +98,7 @@ namespace webApi.Controller {
         /// <param name="id">Identificador do estudante</param>
         /// <response code="204">Sucess</response>
         /// <response code="404">Not Found</response>
+        [Authorize]
         [HttpPut]
         [Route("/api/students/{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -141,6 +146,7 @@ namespace webApi.Controller {
         /// <param name="id">Identificador do estudante</param>
         /// <response code="204">Sucess</response>
         /// <response code="404">Not Found</response>
+        [Authorize]
         [HttpDelete]
         [Route("/api/students/{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]

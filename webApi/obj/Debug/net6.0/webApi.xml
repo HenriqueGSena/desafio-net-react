@@ -6,14 +6,14 @@
     <members>
         <member name="M:webApi.Controller.StudentController.GetAllStudentsAsync(webApi.Data.ApplicationDbContext)">
             <summary>
-            Obter lista de estudantes
+                Obter lista estudantes
             </summary>
-            <returns>Lista de Estudantes</returns>
+            <returns>Lista Estudantes</returns>
             <response code="200">Sucess</response>
         </member>
         <member name="M:webApi.Controller.StudentController.GetByIdAsync(webApi.Data.ApplicationDbContext,System.Int32)">
             <summary>
-            Obter um estudante pelo Id
+                Obter estudante Id
             </summary>
             <param name="id">Identificador do evento</param>
             <response code="200">Sucess</response>
@@ -21,7 +21,7 @@
         </member>
         <member name="M:webApi.Controller.StudentController.PostStudentAsync(webApi.Data.ApplicationDbContext,webApi.viewModels.CreateStudentViewModel)">
             <summary>
-            Cadastrar um novo estudante
+                Cadastrar novo estudante
             </summary>
             <param name="devEvent">Dados do estudante</param>
             <returns>Estudante recem criado</returns>
@@ -29,7 +29,7 @@
         </member>
         <member name="M:webApi.Controller.StudentController.PutStudentAsync(webApi.Data.ApplicationDbContext,webApi.viewModels.CreateStudentViewModel,System.Int32)">
             <summary>
-            Atualizar dados do estudante
+                Atualizar dados estudante
             </summary>
             <param name="id">Identificador do estudante</param>
             <response code="204">Sucess</response>
@@ -37,7 +37,7 @@
         </member>
         <member name="M:webApi.Controller.StudentController.DeleteStudentAsync(webApi.Data.ApplicationDbContext,System.Int32)">
             <summary>
-            Deletar um estudante
+                Deletar estudante Id
             </summary>
             <param name="id">Identificador do estudante</param>
             <response code="204">Sucess</response>

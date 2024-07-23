@@ -38,3 +38,11 @@
 /home/sena/workspace/desafio-net-react/webApi/bin/Debug/net6.0/Swashbuckle.AspNetCore.SwaggerUI.dll
 /home/sena/workspace/desafio-net-react/webApi/obj/Debug/net6.0/webApi.MvcApplicationPartsAssemblyInfo.cs
 /home/sena/workspace/desafio-net-react/webApi/obj/Debug/net6.0/webApi.xml
+/home/sena/workspace/desafio-net-react/webApi/bin/Debug/net6.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll
+/home/sena/workspace/desafio-net-react/webApi/bin/Debug/net6.0/Microsoft.IdentityModel.Abstractions.dll
+/home/sena/workspace/desafio-net-react/webApi/bin/Debug/net6.0/Microsoft.IdentityModel.JsonWebTokens.dll
+/home/sena/workspace/desafio-net-react/webApi/bin/Debug/net6.0/Microsoft.IdentityModel.Logging.dll
+/home/sena/workspace/desafio-net-react/webApi/bin/Debug/net6.0/Microsoft.IdentityModel.Protocols.dll
+/home/sena/workspace/desafio-net-react/webApi/bin/Debug/net6.0/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+/home/sena/workspace/desafio-net-react/webApi/bin/Debug/net6.0/Microsoft.IdentityModel.Tokens.dll
+/home/sena/workspace/desafio-net-react/webApi/bin/Debug/net6.0/System.IdentityModel.Tokens.Jwt.dll
