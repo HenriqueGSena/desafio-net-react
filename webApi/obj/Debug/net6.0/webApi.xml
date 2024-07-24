@@ -45,7 +45,7 @@
         </member>
         <member name="M:webApi.Controller.UserController.Login(System.String,System.String)">
             <summary>
-            Login gerador de token
+                Login gerador de token
             </summary>
             <returns>Token de acesso</returns>
             <response code="200">Sucess</response>
