@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using webApi.Entities;
 using webApi.Service;
+using webApi.viewModels;
 namespace webApi.Controller {
     [ApiController]
     public class UserController : ControllerBase {
@@ -12,9 +13,9 @@ namespace webApi.Controller {
         [HttpPost]
         [Route("/api/auth/login")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public IActionResult Login(string username, string password)
+        public async Task<IActionResult> Login([FromBody] CreateUserViewModel model)
         {
-            if (username == "admin" && password == "password")
+            if (model.Username == "admin" && model.Password == "admin")
             {
                 object token = TokenService.GenerateToken(new User());
                 return Ok(token);
