@@ -22,9 +22,9 @@ export default function AppLogin() {
         username: inputUsername,
         password: inputPassword,
       };
-      console.log("Sending login data: ", loginData);
+      
       const response = await api.post("/api/auth/login", loginData);
-      console.log("Response received: ", response);
+      
       const { token } = response.data;
       localStorage.setItem("jwtToken", token);
       setLoading(false);
