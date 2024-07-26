@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
 import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
 import AppRegister from "./register/AppRegister";
 import api from "../../service/api";
 import { User } from "./interface/User";
@@ -18,24 +19,24 @@ export default function AppHome() {
   const [filteredData, setFilteredData] = useState<User[]>([]);
   const [filterValue, setFilterValue] = useState<string>("");
 
-    const fetchUsers = async () => {
-      try {
-        const response = await api.get("/api/students", {
-          headers: {
-            Authorization: `Bearer ${authToken}`,
-          },
-        });
-        setUsers(response.data);
-      } catch (error) {
-        console.error("Error fetching users", error);
-      }
-    };
+  const fetchUsers = async () => {
+    try {
+      const response = await api.get("/api/students", {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        },
+      });
+      setUsers(response.data);
+    } catch (error) {
+      console.error("Error fetching users", error);
+    }
+  };
 
-    useEffect(() => {
-      if (authToken) {
-        fetchUsers();
-      }
-    }, [authToken]);
+  useEffect(() => {
+    if (authToken) {
+      fetchUsers();
+    }
+  }, [authToken]);
 
   useEffect(() => {
     const filteredUsers = users.filter((user) =>
@@ -55,6 +56,19 @@ export default function AppHome() {
       year: "numeric",
     };
     return new Intl.DateTimeFormat("pt-BR", options).format(date);
+  };
+
+  const handleDelete = async (userId: number) => {
+    try {
+      await api.delete(`/api/students/${userId}`, {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        },
+      });
+      fetchUsers();
+    } catch (error) {
+      console.error("Error deleting user", error);
+    }
   };
 
   return (
@@ -88,6 +102,7 @@ export default function AppHome() {
               <th>Nome do Pai</th>
               <th>Nome da Mãe</th>
               <th>Data Nascimento</th>
+              <th>Ações</th>
             </tr>
           </thead>
           <tbody>
@@ -102,6 +117,14 @@ export default function AppHome() {
                 <td>{user.nomePai}</td>
                 <td>{user.nomeMae}</td>
                 <td>{formatDate(new Date(user.dataNascimento))}</td>
+                <td>
+                  {/* <Button variant="warning">
+                    <i className="bi bi-pencil-square"></i>
+                  </Button> */}
+                  <Button variant="danger" onClick={() => handleDelete(user.id)} className="ms-2">
+                    <i className="bi bi-trash3"></i>
+                  </Button>
+                </td>
               </tr>
             ))}
           </tbody>
