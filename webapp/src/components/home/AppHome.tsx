@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
 import Form from "react-bootstrap/Form";
+import AppRegister from "./register/AppRegister";
 import api from "../../service/api";
 import { User } from "./interface/User";
 import { AuthContext } from "../../context/AuthContext";
@@ -17,7 +18,6 @@ export default function AppHome() {
   const [filteredData, setFilteredData] = useState<User[]>([]);
   const [filterValue, setFilterValue] = useState<string>("");
 
-  useEffect(() => {
     const fetchUsers = async () => {
       try {
         const response = await api.get("/api/students", {
@@ -25,22 +25,21 @@ export default function AppHome() {
             Authorization: `Bearer ${authToken}`,
           },
         });
-
         setUsers(response.data);
       } catch (error) {
         console.error("Error fetching users", error);
       }
     };
 
-    if (authToken) {
-      fetchUsers();
-    }
-  }, [authToken]);
+    useEffect(() => {
+      if (authToken) {
+        fetchUsers();
+      }
+    }, [authToken]);
 
   useEffect(() => {
-    const filteredUsers = users.filter(
-      (user) =>
-        user.nome.toLowerCase().includes(filterValue.toLowerCase())
+    const filteredUsers = users.filter((user) =>
+      user.nome.toLowerCase().includes(filterValue.toLowerCase())
     );
     setFilteredData(filteredUsers);
   }, [users, filterValue]);
@@ -59,24 +58,24 @@ export default function AppHome() {
   };
 
   return (
-    <div>
-      <div className="container text-center">
-        <div className="row mb-4" style={{ marginTop: "10vh" }}>
-          <div className="col">
-            <Form className="w-50 mx-auto">
-              <Form.Control
-                type="text"
-                placeholder="Pesquise pelo aluno aqui"
-                value={filterValue}
-                onChange={handleFilterChange}
-              />
-            </Form>
-          </div>
-          {/* <div className="col-2">
-              <AppRegister getAllContatos={getAllContatos} />
-            </div> */}
+    <div className="container-fluid text-center">
+      <div className="row mb-4" style={{ marginTop: "10vh" }}>
+        <div className="col-12 col-md-8 mx-auto">
+          <Form>
+            <Form.Control
+              type="text"
+              placeholder="Pesquise pelo aluno aqui"
+              value={filterValue}
+              onChange={handleFilterChange}
+            />
+          </Form>
         </div>
+        <div className="col-12 col-md-2 mt-3 mt-md-0">
+          <AppRegister getAllStudents={fetchUsers} />
+        </div>
+      </div>
 
+      <div className="table-responsive">
         <Table striped bordered hover>
           <thead>
             <tr>
