@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useContext, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
-import { Form, Button, Alert} from "react-bootstrap";
+import { Form, Button, Alert } from "react-bootstrap";
 import "./login.css";
 import api from "../../service/api";
+import { AuthContext } from "../../context/AuthContext";
 
 export default function AppLogin() {
-
   const [inputUsername, setInputUsername] = useState("");
   const [inputPassword, setInputPassword] = useState("");
 
@@ -13,8 +13,9 @@ export default function AppLogin() {
   const [show, setShow] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
+  const authContext = useContext(AuthContext);
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setLoading(true);
     try {
@@ -22,12 +23,16 @@ export default function AppLogin() {
         username: inputUsername,
         password: inputPassword,
       };
-      
+
       const response = await api.post("/api/auth/login", loginData);
-      
       const { token } = response.data;
-      localStorage.setItem("jwtToken", token);
-      setLoading(false);
+
+      if (authContext) {
+        authContext.login(token);
+      }
+
+      setLoading(true);
+      await delay(500);
       navigate("/AppHome");
     } catch (error) {
       setLoading(false);
@@ -35,6 +40,10 @@ export default function AppLogin() {
       setErrorMessage("Falha na autenticação. Verifique suas credenciais.");
     }
   };
+
+  function delay(ms: number): Promise<void> {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
 
   return (
     <div className="sign-in__wrapper">

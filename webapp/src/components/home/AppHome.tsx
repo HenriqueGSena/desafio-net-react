@@ -1,46 +1,103 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
 import Form from "react-bootstrap/Form";
+import api from "../../service/api";
+import { User } from "./interface/User";
+import { AuthContext } from "../../context/AuthContext";
 
 export default function AppHome() {
-    return (
-      <div className="d-flex align-items-center" style={{ height: "35vh" }}>
-        <div className="container text-center">
-          <div className="row mb-4">
-            <div className="col">
-              <Form className="w-50 mx-auto">
-                <Form.Control type="text" placeholder="Pesquise contato aqui" />
-              </Form>
-            </div>
-            {/* <div className="col-2">
+  const context = useContext(AuthContext);
+
+  if (!context) {
+    throw new Error("AuthContext must be used within an AuthProvider");
+  }
+
+  const { authToken } = context;
+  const [users, setUsers] = useState<User[]>([]);
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const response = await api.get(
+          "/api/students?",
+          {
+            headers: {
+              Authorization: `Bearer ${authToken}`,
+            },
+          }
+        );
+
+        setUsers(response.data);
+        const totalItems = response.data.length;
+      } catch (error) {
+        console.error("Error fetching users", error);
+      }
+    };
+
+    if (authToken) {
+      fetchUsers();
+    }
+  }, [authToken]);
+
+  const formatDate = (date: Date) => {
+    const options: Intl.DateTimeFormatOptions = {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    };
+    return new Intl.DateTimeFormat("pt-BR", options).format(date);
+  };
+
+  return (
+    <div>
+      <div className="container text-center">
+        <div className="row mb-4" style={{ marginTop: "10vh" }}>
+          <div className="col">
+            <Form className="w-50 mx-auto">
+              <Form.Control
+                type="text"
+                placeholder="Pesquise pelo aluno aqui"
+              />
+            </Form>
+          </div>
+          {/* <div className="col-2">
               <AppRegister getAllContatos={getAllContatos} />
             </div> */}
-          </div>
+        </div>
 
-          <Table striped bordered hover>
-            <thead>
-              <th />
+        <Table striped bordered hover>
+          <thead>
+            <tr>
+              <th></th>
               <th>Nome</th>
               <th>Idade</th>
-              <th>Serie</th>
-              <th>Media</th>
+              <th>Série</th>
+              <th>Média</th>
               <th>Endereço</th>
               <th>Pai</th>
-              <th>Mae</th>
+              <th>Mãe</th>
               <th>Data Nascimento</th>
-            </thead>
-            {/* <tbody>
-              {filteredData.map((contact) => (
-                <tr key={contact.id}>
-                  <td>{contact.id}</td>
-                  <td>{contact.nome}</td>
-                  <td>{contact.email}</td>
-                  <td>{contact.telefone}</td>
+            </tr>
+          </thead>
+          <tbody>
+            {users.map((user) => {
+              return (
+                <tr key={user.id}>
+                  <td>{user.id}</td>
+                  <td>{user.nome}</td>
+                  <td>{user.idade}</td>
+                  <td>{user.serie}</td>
+                  <td>{user.notaMedia}</td>
+                  <td>{user.endereco}</td>
+                  <td>{user.nomePai}</td>
+                  <td>{user.nomeMae}</td>
+                  <td>{formatDate(new Date(user.dataNascimento))}</td>
                 </tr>
-              ))}
-            </tbody> */}
-          </Table>
-        </div>
+              );
+            })}
+          </tbody>
+        </Table>
       </div>
-    );
+    </div>
+  );
 }
