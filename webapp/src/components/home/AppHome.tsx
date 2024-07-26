@@ -18,6 +18,8 @@ export default function AppHome() {
   const [users, setUsers] = useState<User[]>([]);
   const [filteredData, setFilteredData] = useState<User[]>([]);
   const [filterValue, setFilterValue] = useState<string>("");
+  const [editingUser, setEditingUser] = useState<User | null>(null);
+  const [showRegisterModal, setShowRegisterModal] = useState<boolean>(false);
 
   const fetchUsers = async () => {
     try {
@@ -71,6 +73,21 @@ export default function AppHome() {
     }
   };
 
+  const handleEdit = (user: User) => {
+    setEditingUser(user);
+    setShowRegisterModal(true);
+  };
+
+  const handleCloseEdit = () => {
+    setEditingUser(null);
+    setShowRegisterModal(false);
+  };
+
+  const handleShowRegister = () => {
+    setEditingUser(null);
+    setShowRegisterModal(true);
+  };
+
   return (
     <div className="container-fluid text-center">
       <div className="row mb-4" style={{ marginTop: "10vh" }}>
@@ -85,7 +102,9 @@ export default function AppHome() {
           </Form>
         </div>
         <div className="col-12 col-md-2 mt-3 mt-md-0">
-          <AppRegister getAllStudents={fetchUsers} />
+          <Button variant="primary" onClick={handleShowRegister}>
+            Cadastrar Estudante
+          </Button>
         </div>
       </div>
 
@@ -118,10 +137,14 @@ export default function AppHome() {
                 <td>{user.nomeMae}</td>
                 <td>{formatDate(new Date(user.dataNascimento))}</td>
                 <td>
-                  {/* <Button variant="warning">
+                  <Button variant="warning" onClick={() => handleEdit(user)}>
                     <i className="bi bi-pencil-square"></i>
-                  </Button> */}
-                  <Button variant="danger" onClick={() => handleDelete(user.id)} className="ms-2">
+                  </Button>
+                  <Button
+                    variant="danger"
+                    onClick={() => handleDelete(user.id)}
+                    className="ms-2"
+                  >
                     <i className="bi bi-trash3"></i>
                   </Button>
                 </td>
@@ -130,6 +153,14 @@ export default function AppHome() {
           </tbody>
         </Table>
       </div>
+
+      {showRegisterModal && (
+        <AppRegister
+          getAllStudents={fetchUsers}
+          userToEdit={editingUser ?? undefined}
+          onClose={handleCloseEdit}
+        />
+      )}
     </div>
   );
 }
