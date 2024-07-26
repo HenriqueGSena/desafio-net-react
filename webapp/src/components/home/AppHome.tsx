@@ -14,21 +14,19 @@ export default function AppHome() {
 
   const { authToken } = context;
   const [users, setUsers] = useState<User[]>([]);
+  const [filteredData, setFilteredData] = useState<User[]>([]);
+  const [filterValue, setFilterValue] = useState<string>("");
 
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await api.get(
-          "/api/students?",
-          {
-            headers: {
-              Authorization: `Bearer ${authToken}`,
-            },
-          }
-        );
+        const response = await api.get("/api/students", {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        });
 
         setUsers(response.data);
-        const totalItems = response.data.length;
       } catch (error) {
         console.error("Error fetching users", error);
       }
@@ -38,6 +36,18 @@ export default function AppHome() {
       fetchUsers();
     }
   }, [authToken]);
+
+  useEffect(() => {
+    const filteredUsers = users.filter(
+      (user) =>
+        user.nome.toLowerCase().includes(filterValue.toLowerCase())
+    );
+    setFilteredData(filteredUsers);
+  }, [users, filterValue]);
+
+  const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setFilterValue(event.target.value);
+  };
 
   const formatDate = (date: Date) => {
     const options: Intl.DateTimeFormatOptions = {
@@ -57,6 +67,8 @@ export default function AppHome() {
               <Form.Control
                 type="text"
                 placeholder="Pesquise pelo aluno aqui"
+                value={filterValue}
+                onChange={handleFilterChange}
               />
             </Form>
           </div>
@@ -74,27 +86,25 @@ export default function AppHome() {
               <th>Série</th>
               <th>Média</th>
               <th>Endereço</th>
-              <th>Pai</th>
-              <th>Mãe</th>
+              <th>Nome do Pai</th>
+              <th>Nome da Mãe</th>
               <th>Data Nascimento</th>
             </tr>
           </thead>
           <tbody>
-            {users.map((user) => {
-              return (
-                <tr key={user.id}>
-                  <td>{user.id}</td>
-                  <td>{user.nome}</td>
-                  <td>{user.idade}</td>
-                  <td>{user.serie}</td>
-                  <td>{user.notaMedia}</td>
-                  <td>{user.endereco}</td>
-                  <td>{user.nomePai}</td>
-                  <td>{user.nomeMae}</td>
-                  <td>{formatDate(new Date(user.dataNascimento))}</td>
-                </tr>
-              );
-            })}
+            {filteredData.map((user) => (
+              <tr key={user.id}>
+                <td>{user.id}</td>
+                <td>{user.nome}</td>
+                <td>{user.idade}</td>
+                <td>{user.serie}</td>
+                <td>{user.notaMedia}</td>
+                <td>{user.endereco}</td>
+                <td>{user.nomePai}</td>
+                <td>{user.nomeMae}</td>
+                <td>{formatDate(new Date(user.dataNascimento))}</td>
+              </tr>
+            ))}
           </tbody>
         </Table>
       </div>
